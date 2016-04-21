@@ -1,0 +1,15 @@
+<!doctype html>
+<html>
+  <head>
+    <title>image-base64 demo</title>
+    <script src="/bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+    <link rel="import" href="image-base64.html">
+  </head>
+  <body>
+    <h3>image-base64 Demo</h3>
+    <template is="dom-bind">
+      <image-base64 url="http://i.imgur.com/SHo6Fub.jpg" width="100" base64="{{save}}"></image-base64>
+      {{save}}
+    </template>
+  </body>
+</html>
