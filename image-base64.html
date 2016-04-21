@@ -10,9 +10,7 @@
   </template>
 </dom-module>
 <script>
-  var canvas = document.getElementById("canvas")
-  var ctx = canvas.getContext("2d")
-  var that
+  var that, img, ctx
   Polymer({
     is: "image-base64",
     properties: {
@@ -29,9 +27,10 @@
       that = this
       img = new Image()
       img.setAttribute('crossOrigin', 'anonymous')
+      ctx = that.$.canvas.getContext("2d")
       img.onload = function () {
-        canvas.height = canvas.width * (img.height / img.width)
-    
+        that.$.canvas.height = that.$.canvas.width * (img.height / img.width)
+
         var oc = document.createElement('canvas')
         var octx = oc.getContext('2d')
 
@@ -40,8 +39,8 @@
         octx.drawImage(img, 0, 0, oc.width, oc.height);
         octx.drawImage(oc, 0, 0, oc.width * 0.5, oc.height * 0.5)
 
-        ctx.drawImage(oc, 0, 0, oc.width * 0.5, oc.height * 0.5, 0, 0, canvas.width, canvas.height)
-        that.base64 = canvas.toDataURL("image/jpeg")
+        ctx.drawImage(oc, 0, 0, oc.width * 0.5, oc.height * 0.5, 0, 0, that.$.canvas.width, that.$.canvas.height)
+        that.base64 = that.$.canvas.toDataURL("image/jpeg")
      }
   }
 })
