@@ -1,0 +1,48 @@
+<link rel="import" href="/bower_components/polymer/polymer.html">
+<!--
+`<image-base64></image-base64>` resizing and convert images to base64
+@demo demo.html
+-->
+
+<dom-module id="image-base64">
+  <template>
+    <canvas id="canvas" width="{{width}}"></canvas>
+  </template>
+</dom-module>
+<script>
+  var canvas = document.getElementById("canvas")
+  var ctx = canvas.getContext("2d")
+  var that
+  Polymer({
+    is: "image-base64",
+    properties: {
+      url: {type:String, observer:"load(url)"}
+      width: {type: Number,value: 100},
+      base64: {
+        notify: true
+      }
+    },
+    load: function(url) {
+      img.src = url
+    },
+    ready: function() {
+      that = this
+      img = new Image()
+      img.setAttribute('crossOrigin', 'anonymous')
+      img.onload = function () {
+        canvas.height = canvas.width * (img.height / img.width)
+    
+        var oc = document.createElement('canvas')
+        var octx = oc.getContext('2d')
+
+        oc.width = img.width * 0.5
+        oc.height = img.height * 0.5
+        octx.drawImage(img, 0, 0, oc.width, oc.height);
+        octx.drawImage(oc, 0, 0, oc.width * 0.5, oc.height * 0.5)
+
+        ctx.drawImage(oc, 0, 0, oc.width * 0.5, oc.height * 0.5, 0, 0, canvas.width, canvas.height)
+        that.base64 = canvas.toDataURL("image/jpeg"))
+     }
+  }
+})
+</script>
