@@ -1,0 +1,13 @@
+{
+  "name": "image-base64",
+  "version": "1.0.0",
+  "description": "resizing and convert images to base64",
+  "main": "image-base64.html",
+  "keywords": [
+    "polymer",
+    "web-components"
+  ],
+  "dependencies": {
+    "polymer": "*"
+  }
+}
