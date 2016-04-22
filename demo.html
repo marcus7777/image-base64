@@ -8,8 +8,12 @@
   <body>
     <h3>image-base64 Demo</h3>
     <template is="dom-bind">
+      
       <image-base64 url="http://i.imgur.com/SHo6Fub.jpg" width="100" base64="{{save}}"></image-base64>
       {{save}}
+      <input value="{{url::change}}"></input>
+      <image-base64 url="{{url}}" width="100" base64="{{saveMe}}"></image-base64>
+      {{saveMe}}
     </template>
   </body>
 </html>
