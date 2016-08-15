@@ -25,6 +25,7 @@
       img = new Image()
       img.setAttribute('crossOrigin', 'anonymous')
       img.onload = function () {
+        //TODO steps = Math.ceil(Math.log(sourceWidth / targetWidth) / Math.log(2)) as http://stackoverflow.com/questions/17861447/html5-canvas-drawimage-how-to-apply-antialiasing
         if (img.width > that.$.canvas.width || that.scalingUp) {
           that.$.canvas.height = that.$.canvas.width * (img.height / img.width)
         } else {// to avoid scaling up
