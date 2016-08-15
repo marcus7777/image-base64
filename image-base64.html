@@ -27,14 +27,15 @@
       img.onload = function () {
         //TODO steps = Math.ceil(Math.log(sourceWidth / targetWidth) / Math.log(2)) as http://stackoverflow.com/questions/17861447/html5-canvas-drawimage-how-to-apply-antialiasing
         if (img.width > that.$.canvas.width || that.scalingUp) {
+          console.log(Math.ceil(Math.log(img.width / that.$.canvas.width ) / Math.log(2)))
           that.$.canvas.height = that.$.canvas.width * (img.height / img.width)
         } else {// to avoid scaling up
           that.$.canvas.height = img.height
           that.$.canvas.width = img.width
         }
         var octx = that.$.canvas.getContext('2d')
-        octx.fillStyle = "#FFF"
-        octx.fillRect(0, 0, fav.width, fav.height)
+        octx.fillStyle = that.background
+        octx.fillRect(0, 0, img.width, img.height)
         octx.drawImage(img, 0, 0, that.$.canvas.width, that.$.canvas.height)
         that.base64 = that.$.canvas.toDataURL("image/jpeg")
       }
