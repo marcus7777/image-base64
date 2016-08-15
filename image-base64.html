@@ -31,8 +31,9 @@
           that.$.canvas.height = img.height
           that.$.canvas.width = img.width
         }
-	window.pica.resizeCanvas(img, that.$.canvas)
-        that.base64 = that.$.canvas.toDataURL("image/jpeg")
+	window.pica.resizeCanvas(img, that.$.canvas, {alpha: true},function() {
+          that.base64 = that.$.canvas.toDataURL("image/png")
+	})
       }
       img.src = url
     }
