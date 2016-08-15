@@ -8,6 +8,7 @@
     "web-components"
   ],
   "dependencies": {
-    "polymer": "*"
+    "polymer": "*",
+    "pica": "nodeca/pica#^2.0.6"
   }
 }
