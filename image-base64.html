@@ -16,10 +16,9 @@
     properties: {
       url: {type:String, observer:"load"},
       width: {type: Number,value: 100},
+      background: {type: String, value: "#FFF"},
       scalingUp: {value: false},
-      base64: {
-        notify: true
-      }
+      base64: {notify: true}
     },
     load: function(url) {
       var that = this
@@ -33,6 +32,8 @@
           that.$.canvas.width = img.width
         }
         var octx = that.$.canvas.getContext('2d')
+        octx.fillStyle = "#FFF"
+        octx.fillRect(0, 0, fav.width, fav.height)
         octx.drawImage(img, 0, 0, that.$.canvas.width, that.$.canvas.height)
         that.base64 = that.$.canvas.toDataURL("image/jpeg")
       }
