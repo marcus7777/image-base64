@@ -7,7 +7,7 @@
 
 <dom-module id="image-base64">
   <template>
-    <canvas id="canvas" hidden width="{{width}}"></canvas>
+    <canvas id="canvas" hidden width="{{_width}}"></canvas>
   </template>
 </dom-module>
 <script>
@@ -16,10 +16,19 @@
     properties: {
       url: {type:String, observer:"load"},
       width: {type: Number,value: 100},
+			_width: {computed:"getWidth(width)"},
       background: {type: String, value: "#FFF"},
       scalingUp: {value: false},
       base64: {notify: true}
     },
+		getWidth: function(width) {
+			if (width < 10) {
+			  console.log("Small is dangerous, I'm upping your value to 10")
+				return 10
+			} else {
+				return width
+			}
+		},
     load: function(url) {
       var that = this
       var img = new Image()
