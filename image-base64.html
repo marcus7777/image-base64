@@ -43,7 +43,7 @@
           that.$.canvas.width  = img.width
         }
 	      window.pica.resizeCanvas(img, that.$.canvas, {alpha: true},function() {
-          that.$.canvas.height = Math.min(that.$.canvas.height, that.maxHeight)
+          // that.$.canvas.height = Math.min(that.$.canvas.height, that.maxHeight)
           that.base64 = that.$.canvas.toDataURL("image/png")
 	      })
       }
