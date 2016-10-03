@@ -19,7 +19,8 @@
 			_width: {computed:"getWidth(width)"},
       background: {type: String, value: "#FFF"},
       scalingUp: {value: false},
-      base64: {notify: true}
+      base64: {notify: true},
+      maxHeight: {value: 70},
     },
 		getWidth: function(width) {
 			if (width < 10) {
@@ -35,6 +36,7 @@
       img.setAttribute('crossOrigin', 'anonymous')
       img.onload = function () {
         if (img.width > that.$.canvas.width || that.scalingUp) {
+          // Implement max-height here buy changing the height of the canvas and moving the image into the middle 
           that.$.canvas.height = that.$.canvas.width * (img.height / img.width)
         } else {// to avoid scaling up
           that.$.canvas.height = img.height
