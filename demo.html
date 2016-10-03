@@ -10,10 +10,11 @@
     <template is="dom-bind">
       https://lh3.googleusercontent.com/-3MDH11Vx9ks/AAAAAAAAAAI/AAAAAAAAknQ/8R1zCRvd0RQ/s100-p-rw-no/photo.jpg
       <image-base64 url="https://lh3.googleusercontent.com/-3MDH11Vx9ks/AAAAAAAAAAI/AAAAAAAAknQ/8R1zCRvd0RQ/s100-p-rw-no/photo.jpg" width="100" base64="{{save}}"></image-base64>
-      {{save}}
-      <input value="{{url::change}}"></input>
+      <img src={{save}} /> {{save}}
+      
+      <input value="{{url::change}}" />
       <image-base64 url="{{url}}" width="100" base64="{{saveMe}}"></image-base64>
-      {{saveMe}}
+      <img src={{saveMe}} /> {{saveMe}}
     </template>
   </body>
 </html>
