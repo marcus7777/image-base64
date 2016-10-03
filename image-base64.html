@@ -44,7 +44,14 @@
         }
 	      window.pica.resizeCanvas(img, that.$.canvas, {alpha: true},function() {
           // that.$.canvas.height = Math.min(that.$.canvas.height, that.maxHeight)
-          that.base64 = that.$.canvas.toDataURL("image/png")
+          var tempCanvas = document.createElement("canvas")
+          var tCtx = tempCanvas.getContext("2d");
+
+          tempCanvas.width = that.$.canvas.width;
+          tempCanvas.height = Math.min(that.$.canvas.height, that.maxHeight);
+
+          tCtx.drawImage(that.$.canvas,0,0);
+          that.base64 = tempCanvas.toDataURL("image/png")
 	      })
       }
       img.src = url
