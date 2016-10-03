@@ -37,12 +37,13 @@
       img.onload = function () {
         if (img.width > that.$.canvas.width || that.scalingUp) {
           //moving the image into themaxHeight
-          that.$.canvas.height = Math.min(that.width * (img.height / img.width), that.maxHeight)
+          that.$.canvas.height = that.width * (img.height / img.width)
         } else {// to avoid scaling up
-          that.$.canvas.height = Math.min(img.height, that.maxHeight)
+          that.$.canvas.height = img.height
           that.$.canvas.width  = img.width
         }
 	      window.pica.resizeCanvas(img, that.$.canvas, {alpha: true},function() {
+          that.$.canvas.height = Math.min(that.$.canvas.height, that.maxHeight)
           that.base64 = that.$.canvas.toDataURL("image/png")
 	      })
       }
