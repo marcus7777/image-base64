@@ -16,7 +16,7 @@
     properties: {
       url: {type:String, observer:"load"},
       width: {type: Number,value: 100},
-			_width: {computed:"getWidth(width)"},
+      _width: {computed:"getWidth(width)"},
       background: {type: String, value: "#FFF"},
       scalingUp: {value: false},
       base64: {notify: true},
@@ -36,11 +36,11 @@
       img.setAttribute('crossOrigin', 'anonymous')
       img.onload = function () {
         if (img.width > that.$.canvas.width || that.scalingUp) {
-          // Implement max-height here buy changing the height of the canvas and moving the image into the middle 
-          that.$.canvas.height = that.$.canvas.width * (img.height / img.width)
+          //moving the image into themaxHeight
+          that.$.canvas.height = Math.min(that.width * (img.height / img.width), that.maxHeight)
         } else {// to avoid scaling up
-          that.$.canvas.height = img.height
-          that.$.canvas.width = img.width
+          that.$.canvas.height = Math.min(img.height, that.maxHeight)
+          that.$.canvas.width  = img.width
         }
 	window.pica.resizeCanvas(img, that.$.canvas, {alpha: true},function() {
           that.base64 = that.$.canvas.toDataURL("image/png")
