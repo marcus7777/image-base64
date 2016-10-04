@@ -34,46 +34,37 @@
 		},
     load: function(url) {
       var that = this
-      var img = new Image()
       var img2 = new Image()
-      img.setAttribute('crossOrigin', 'anonymous')
-      img.onload = function () {
-	      var can = document.createElement("canvas");
-        var ctx = can.getContext('2d')
-	ctx.save();
-	      switch(that.orientation){
-        case 2:// horizontal flip
-          ctx.translate(img.width, 0)
-          ctx.scale(-1, 1)
-          break
-        case 3:// 180° rotate left
-          ctx.translate(img.width, canvas.height)
-          ctx.rotate(Math.PI)
-          break
-        case 4:// vertical flip
-          ctx.translate(0, img.height)
-          ctx.scale(1, -1)
-          break
-        case 5: // vertical flip + 90 rotate right
-          ctx.rotate(0.5 * Math.PI)
-          ctx.scale(1, -1)
-          break
-        case 6: // 90° rotate right
-          ctx.rotate(0.5 * Math.PI)
-          ctx.translate(0, -img.height)
-          break
-        case 7:// horizontal flip + 90 rotate right
-          ctx.rotate(0.5 * Math.PI)
-          ctx.translate(img.width, -img.height)
-          ctx.scale(-1, 1)
-          break
-        case 8: // 90° rotate left
-          ctx.rotate(-0.5 * Math.PI)
-          ctx.translate(-img.width, 0)
-          break
-        }
-	      ctx.drawImage(img,0,0)
-        ctx.restore()
+      
+  var orientation = that.orientation
+  var can = document.createElement("canvas");
+  var ctx = can.getContext('2d');
+  var thisImage = new Image;
+  thisImage.setAttribute('crossOrigin', 'anonymous')    
+  thisImage.onload = function() {
+    can.width  = thisImage.width;
+    can.height = thisImage.height;
+    ctx.save();
+    var width  = can.width;  var styleWidth  = can.style.width;
+    var height = can.height; var styleHeight = can.style.height;
+    if (orientation) {
+      if (orientation > 4) {
+        can.width  = height; can.style.width  = styleHeight;
+        can.height = width;  can.style.height = styleWidth;
+      }
+      switch (orientation) {
+      case 2: ctx.translate(width, 0);     ctx.scale(-1,1); break;
+      case 3: ctx.translate(width,height); ctx.rotate(Math.PI); break;
+      case 4: ctx.translate(0,height);     ctx.scale(1,-1); break;
+      case 5: ctx.rotate(0.5 * Math.PI);   ctx.scale(1,-1); break;
+      case 6: ctx.rotate(0.5 * Math.PI);   ctx.translate(0,-height); break;
+      case 7: ctx.rotate(0.5 * Math.PI);   ctx.translate(width,-height); ctx.scale(-1,1); break;
+      case 8: ctx.rotate(-0.5 * Math.PI);  ctx.translate(-width,0); break;
+      }
+    }
+
+    ctx.drawImage(thisImage,0,0);
+    ctx.restore();
         img2.src = can.toDataURL();
       }
       img2.onload = function () {
@@ -112,7 +103,7 @@
             }
 	        })
       }
-      img.src = url
+      thisImage.src = url
     }
   })
 </script>
