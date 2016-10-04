@@ -68,39 +68,39 @@
               switch(that.orientation){
                 case 2:
                   // horizontal flip
-                  tctx.translate(canvas.width, 0)
-                  tctx.scale(-1, 1)
+                  tCtx.translate(canvas.width, 0)
+                  tCtx.scale(-1, 1)
                   break
                 case 3:
                   // 180° rotate left
-                  tctx.translate(canvas.width, canvas.height)
-                  tctx.rotate(Math.PI)
+                  tCtx.translate(canvas.width, canvas.height)
+                  tCtx.rotate(Math.PI)
                   break
                 case 4:
                   // vertical flip
-                  tctx.translate(0, canvas.height)
-                  tctx.scale(1, -1)
+                  tCtx.translate(0, canvas.height)
+                  tCtx.scale(1, -1)
                   break
                 case 5:
                   // vertical flip + 90 rotate right
-                  tctx.rotate(0.5 * Math.PI)
-                  tctx.scale(1, -1)
+                  tCtx.rotate(0.5 * Math.PI)
+                  tCtx.scale(1, -1)
                   break;
                 case 6:
                   // 90° rotate right
-                  tctx.rotate(0.5 * Math.PI)
-                  tctx.translate(0, -canvas.height)
+                  tCtx.rotate(0.5 * Math.PI)
+                  tCtx.translate(0, -canvas.height)
                   break
                 case 7:
                   // horizontal flip + 90 rotate right
-                  tctx.rotate(0.5 * Math.PI)
-                  tctx.translate(canvas.width, -canvas.height)
-                  tctx.scale(-1, 1)
+                  tCtx.rotate(0.5 * Math.PI)
+                  tCtx.translate(canvas.width, -canvas.height)
+                  tCtx.scale(-1, 1)
                   break
                 case 8:
                   // 90° rotate left
-                  tctx.rotate(-0.5 * Math.PI)
-                  tctx.translate(-canvas.width, 0)
+                  tCtx.rotate(-0.5 * Math.PI)
+                  tCtx.translate(-canvas.width, 0)
                   break
               }
               that.base64 = tempCanvas.toDataURL("image/png")
