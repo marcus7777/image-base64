@@ -35,20 +35,23 @@
     load: function(url) {
       var that = this
       var img = new Image()
+      var img2 = new Image()
       img.setAttribute('crossOrigin', 'anonymous')
       img.onload = function () {
-	    var ctx = that.$.canvas.getContext("2d")
-	    switch(that.orientation){
+	      var can = document.createElement("canvas");
+        var ctx = can.getContext('2d')
+	
+	      switch(that.orientation){
         case 2:// horizontal flip
-          ctx.translate(that.$.canvas.width, 0)
+          ctx.translate(img.width, 0)
           ctx.scale(-1, 1)
           break
         case 3:// 180° rotate left
-          ctx.translate(that.$.canvas.width, canvas.height)
+          ctx.translate(img.width, canvas.height)
           ctx.rotate(Math.PI)
           break
         case 4:// vertical flip
-          ctx.translate(0, that.$.canvas.height)
+          ctx.translate(0, img.height)
           ctx.scale(1, -1)
           break
         case 5: // vertical flip + 90 rotate right
@@ -57,26 +60,31 @@
           break
         case 6: // 90° rotate right
           ctx.rotate(0.5 * Math.PI)
-          ctx.translate(0, -that.$.canvas.height)
+          ctx.translate(0, -img.height)
           break
         case 7:// horizontal flip + 90 rotate right
           ctx.rotate(0.5 * Math.PI)
-          ctx.translate(that.$.canvas.width, -that.$.canvas.height)
+          ctx.translate(img.width, -img.height)
           ctx.scale(-1, 1)
           break
         case 8: // 90° rotate left
           ctx.rotate(-0.5 * Math.PI)
-          ctx.translate(-that.$.canvas.width, 0)
+          ctx.translate(-img.width, 0)
           break
+        }
+	      ctx.drawImage(thisImage,0,0)
+        ctx.restore()
+        img2.src = = can.toDataURL();
       }
-      if (img.width > that.$.canvas.width || that.scalingUp) {
-        //moving the image into themaxHeight
-        that.$.canvas.height = that.width * (img.height / img.width)
-      } else {// to avoid scaling up
-        that.$.canvas.height = img.height
-        that.$.canvas.width  = img.width
-      }
-	    window.pica.resizeCanvas(img, that.$.canvas, {alpha: true},function() {
+      img2.onload = function () {
+        if (img.width > that.$.canvas.width || that.scalingUp) {
+          //moving the image into themaxHeight
+          that.$.canvas.height = that.width * (img.height / img.width)
+        } else {// to avoid scaling up
+          that.$.canvas.height = img.height
+          that.$.canvas.width  = img.width
+        }
+	      window.pica.resizeCanvas(img, that.$.canvas, {alpha: true},function() {
           // that.$.canvas.height = Math.min(that.$.canvas.height, that.maxHeight)
             if (that.$.canvas.height > that.maxHeight || that.$.canvas.width > that.maxWidth) {
               var tempCanvas = document.createElement("canvas")
