@@ -22,6 +22,7 @@
       base64: {notify: true},
       maxHeight: {value: 300},
       maxWidth: {value: 300},
+      orientation: {value: 1},
     },
 		getWidth: function(width) {
 			if (width < 10) {
@@ -45,29 +46,68 @@
         }
 	      window.pica.resizeCanvas(img, that.$.canvas, {alpha: true},function() {
           // that.$.canvas.height = Math.min(that.$.canvas.height, that.maxHeight)
-          if (that.$.canvas.height > that.maxHeight || that.$.canvas.width > that.maxWidth) {
-            var tempCanvas = document.createElement("canvas")
-            var tCtx = tempCanvas.getContext("2d")
+            if (that.$.canvas.height > that.maxHeight || that.$.canvas.width > that.maxWidth) {
+              var tempCanvas = document.createElement("canvas")
+              var tCtx = tempCanvas.getContext("2d")
 
-            tempCanvas.width  = Math.min(that.$.canvas.width, that.maxWidth)
-            if (that.$.canvas.width > that.maxWidth) {
-              var moveLeft = (that.$.canvas.width - that.maxWidth) / 2
-            } else {
-              var moveLeft = 0
-            }
+              tempCanvas.width  = Math.min(that.$.canvas.width, that.maxWidth)
+              if (that.$.canvas.width > that.maxWidth) {
+                var moveLeft = (that.$.canvas.width - that.maxWidth) / 2
+              } else {
+                var moveLeft = 0
+              }
             
-            tempCanvas.height = Math.min(that.$.canvas.height, that.maxHeight)
-            if (that.$.canvas.height > that.maxHeight) {
-              var moveUp = (that.$.canvas.height - that.maxHeight) / 2
-            } else {
-              var moveUp = 0
-            }
+              tempCanvas.height = Math.min(that.$.canvas.height, that.maxHeight)
+              if (that.$.canvas.height > that.maxHeight) {
+                var moveUp = (that.$.canvas.height - that.maxHeight) / 2
+              } else {
+                var moveUp = 0
+              }
             
-            tCtx.drawImage(that.$.canvas,0 - moveLeft ,0 - moveUp)
-            that.base64 = tempCanvas.toDataURL("image/png")
-          } else {
-            that.base64 = that.$.canvas.toDataURL("image/png")
-          }
+              tCtx.drawImage(that.$.canvas,0 - moveLeft ,0 - moveUp)
+              switch(that.orientation){
+                case 2:
+                  // horizontal flip
+                  tctx.translate(canvas.width, 0)
+                  tctx.scale(-1, 1)
+                  break
+                case 3:
+                  // 180° rotate left
+                  tctx.translate(canvas.width, canvas.height)
+                  tctx.rotate(Math.PI)
+                  break
+                case 4:
+                  // vertical flip
+                  tctx.translate(0, canvas.height)
+                  tctx.scale(1, -1)
+                  break
+                case 5:
+                  // vertical flip + 90 rotate right
+                  tctx.rotate(0.5 * Math.PI)
+                  tctx.scale(1, -1)
+                  break;
+                case 6:
+                  // 90° rotate right
+                  tctx.rotate(0.5 * Math.PI)
+                  tctx.translate(0, -canvas.height)
+                  break
+                case 7:
+                  // horizontal flip + 90 rotate right
+                  tctx.rotate(0.5 * Math.PI)
+                  tctx.translate(canvas.width, -canvas.height)
+                  tctx.scale(-1, 1)
+                  break
+                case 8:
+                  // 90° rotate left
+                  tctx.rotate(-0.5 * Math.PI)
+                  tctx.translate(-canvas.width, 0)
+                  break
+              }
+              that.base64 = tempCanvas.toDataURL("image/png")
+            } else {
+              that.base64 = that.$.canvas.toDataURL("image/png")
+            }
+          
 	      })
       }
       img.src = url
