@@ -40,7 +40,7 @@
       img.onload = function () {
 	      var can = document.createElement("canvas");
         var ctx = can.getContext('2d')
-	
+	ctx.save();
 	      switch(that.orientation){
         case 2:// horizontal flip
           ctx.translate(img.width, 0)
