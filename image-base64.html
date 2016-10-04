@@ -37,14 +37,46 @@
       var img = new Image()
       img.setAttribute('crossOrigin', 'anonymous')
       img.onload = function () {
-        if (img.width > that.$.canvas.width || that.scalingUp) {
-          //moving the image into themaxHeight
-          that.$.canvas.height = that.width * (img.height / img.width)
-        } else {// to avoid scaling up
-          that.$.canvas.height = img.height
-          that.$.canvas.width  = img.width
-        }
-	      window.pica.resizeCanvas(img, that.$.canvas, {alpha: true},function() {
+	    var ctx = that.$.canvas.getContext("2d")
+	    switch(that.orientation){
+        case 2:// horizontal flip
+          ctx.translate(that.$.canvas.width, 0)
+          ctx.scale(-1, 1)
+          break
+        case 3:// 180° rotate left
+          ctx.translate(that.$.canvas.width, canvas.height)
+          ctx.rotate(Math.PI)
+          break
+        case 4:// vertical flip
+          ctx.translate(0, that.$.canvas.height)
+          ctx.scale(1, -1)
+          break
+        case 5: // vertical flip + 90 rotate right
+          ctx.rotate(0.5 * Math.PI)
+          ctx.scale(1, -1)
+          break
+        case 6: // 90° rotate right
+          ctx.rotate(0.5 * Math.PI)
+          ctx.translate(0, -that.$.canvas.height)
+          break
+        case 7:// horizontal flip + 90 rotate right
+          ctx.rotate(0.5 * Math.PI)
+          ctx.translate(that.$.canvas.width, -that.$.canvas.height)
+          ctx.scale(-1, 1)
+          break
+        case 8: // 90° rotate left
+          ctx.rotate(-0.5 * Math.PI)
+          ctx.translate(-that.$.canvas.width, 0)
+          break
+      }
+      if (img.width > that.$.canvas.width || that.scalingUp) {
+        //moving the image into themaxHeight
+        that.$.canvas.height = that.width * (img.height / img.width)
+      } else {// to avoid scaling up
+        that.$.canvas.height = img.height
+        that.$.canvas.width  = img.width
+      }
+	    window.pica.resizeCanvas(img, that.$.canvas, {alpha: true},function() {
           // that.$.canvas.height = Math.min(that.$.canvas.height, that.maxHeight)
             if (that.$.canvas.height > that.maxHeight || that.$.canvas.width > that.maxWidth) {
               var tempCanvas = document.createElement("canvas")
@@ -65,44 +97,7 @@
               }
             
               tCtx.drawImage(that.$.canvas,0 - moveLeft ,0 - moveUp)
-              switch(that.orientation){
-                case 2:
-                  // horizontal flip
-                  tCtx.translate(canvas.width, 0)
-                  tCtx.scale(-1, 1)
-                  break
-                case 3:
-                  // 180° rotate left
-                  tCtx.translate(canvas.width, canvas.height)
-                  tCtx.rotate(Math.PI)
-                  break
-                case 4:
-                  // vertical flip
-                  tCtx.translate(0, canvas.height)
-                  tCtx.scale(1, -1)
-                  break
-                case 5:
-                  // vertical flip + 90 rotate right
-                  tCtx.rotate(0.5 * Math.PI)
-                  tCtx.scale(1, -1)
-                  break;
-                case 6:
-                  // 90° rotate right
-                  tCtx.rotate(0.5 * Math.PI)
-                  tCtx.translate(0, -canvas.height)
-                  break
-                case 7:
-                  // horizontal flip + 90 rotate right
-                  tCtx.rotate(0.5 * Math.PI)
-                  tCtx.translate(canvas.width, -canvas.height)
-                  tCtx.scale(-1, 1)
-                  break
-                case 8:
-                  // 90° rotate left
-                  tCtx.rotate(-0.5 * Math.PI)
-                  tCtx.translate(-canvas.width, 0)
-                  break
-              }
+              
               that.base64 = tempCanvas.toDataURL("image/png")
             } else {
               that.base64 = that.$.canvas.toDataURL("image/png")
