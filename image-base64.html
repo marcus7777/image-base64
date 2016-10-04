@@ -20,7 +20,8 @@
       background: {type: String, value: "#FFF"},
       scalingUp: {value: false},
       base64: {notify: true},
-      maxHeight: {value: 70},
+      maxHeight: {value: 300},
+      maxWidth: {value: 300},
     },
 		getWidth: function(width) {
 			if (width < 10) {
@@ -44,14 +45,25 @@
         }
 	      window.pica.resizeCanvas(img, that.$.canvas, {alpha: true},function() {
           // that.$.canvas.height = Math.min(that.$.canvas.height, that.maxHeight)
-          if (that.$.canvas.height > that.maxHeight) {
+          if (that.$.canvas.height > that.maxHeight || that.$.canvas.width > that.maxWidth) {
             var tempCanvas = document.createElement("canvas")
             var tCtx = tempCanvas.getContext("2d")
 
-            tempCanvas.width = that.$.canvas.width
+            tempCanvas.width  = Math.min(that.$.canvas.width, that.maxWidth)
+            if (that.$.canvas.width > that.maxWidth) {
+              var moveLeft = (that.$.canvas.width - that.maxWidth) / 2
+            } else {
+              var moveLeft = 0
+            }
+            
             tempCanvas.height = Math.min(that.$.canvas.height, that.maxHeight)
-
-            tCtx.drawImage(that.$.canvas,0,0 - (that.$.canvas.height - that.maxHeight) / 2)
+            if (that.$.canvas.height > that.maxHeight) {
+              var moveUp = (that.$.canvas.height - that.maxHeight) / 2
+            } else {
+              var moveUp = 0
+            }
+            
+            tCtx.drawImage(that.$.canvas,0 - moveLeft ,0 - moveUp)
             that.base64 = tempCanvas.toDataURL("image/png")
           } else {
             that.base64 = that.$.canvas.toDataURL("image/png")
