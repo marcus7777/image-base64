@@ -24,10 +24,10 @@
       maxWidth: {value: 300},
       orientation: {value: 1},
     },
-		getWidth: function(width) {
-			if (width < 10) {
-			  console.log("Small is dangerous, I'm upping your value to 10")
-				return 10
+    getWidth: function(width) {
+      if (width < 10) {
+        console.log("Small is dangerous, I'm upping your value to 10")
+        return 10
 			} else {
 				return width
 			}
@@ -35,40 +35,38 @@
     load: function(url) {
       var that = this
       var img2 = new Image()
-      
-  var orientation = that.orientation
-  var can = document.createElement("canvas");
-  var ctx = can.getContext('2d');
-  var thisImage = new Image;
-  thisImage.setAttribute('crossOrigin', 'anonymous')    
-  thisImage.onload = function() {
-    can.width  = thisImage.width;
-    can.height = thisImage.height;
-    ctx.save();
-    var width  = can.width;  var styleWidth  = can.style.width;
-    var height = can.height; var styleHeight = can.style.height;
-    if (orientation) {
-      if (orientation > 4) {
-        can.width  = height; can.style.width  = styleHeight;
-        can.height = width;  can.style.height = styleWidth;
-      }
-      switch (orientation) {
-      case 2: ctx.translate(width, 0);     ctx.scale(-1,1); break;
-      case 3: ctx.translate(width,height); ctx.rotate(Math.PI); break;
-      case 4: ctx.translate(0,height);     ctx.scale(1,-1); break;
-      case 5: ctx.rotate(0.5 * Math.PI);   ctx.scale(1,-1); break;
-      case 6: ctx.rotate(0.5 * Math.PI);   ctx.translate(0,-height); break;
-      case 7: ctx.rotate(0.5 * Math.PI);   ctx.translate(width,-height); ctx.scale(-1,1); break;
-      case 8: ctx.rotate(-0.5 * Math.PI);  ctx.translate(-width,0); break;
-      }
-    }
-
-    ctx.drawImage(thisImage,0,0);
-    ctx.restore();
-        img2.src = can.toDataURL();
-      }
-      img2.onload = function () {
-        if (img2.width > that.$.canvas.width || that.scalingUp) {
+      var orientation = that.orientation
+      var can = document.createElement("canvas")
+      var ctx = can.getContext('2d')
+      var thisImage = new Image
+      thisImage.setAttribute('crossOrigin', 'anonymous')    
+      thisImage.onload = function() {
+        can.width  = thisImage.width
+        can.height = thisImage.height
+        ctx.save()
+        var width  = can.width;  var styleWidth  = can.style.width
+        var height = can.height; var styleHeight = can.style.height
+        if (orientation) {
+          if (orientation > 4) {
+            can.width  = height; can.style.width  = styleHeight
+            can.height = width;  can.style.height = styleWidth
+          }
+          switch (orientation) {
+            case 2: ctx.translate(width, 0);     ctx.scale(-1,1); break
+            case 3: ctx.translate(width,height); ctx.rotate(Math.PI); break
+            case 4: ctx.translate(0,height);     ctx.scale(1,-1); break
+            case 5: ctx.rotate(0.5 * Math.PI);   ctx.scale(1,-1); break
+            case 6: ctx.rotate(0.5 * Math.PI);   ctx.translate(0,-height); break
+            case 7: ctx.rotate(0.5 * Math.PI);   ctx.translate(width,-height); ctx.scale(-1,1); break
+            case 8: ctx.rotate(-0.5 * Math.PI);  ctx.translate(-width,0); break
+          }
+        }
+        ctx.drawImage(thisImage,0,0)
+        ctx.restore()
+          img2.src = can.toDataURL()
+        }
+        img2.onload = function () {
+          if (img2.width > that.$.canvas.width || that.scalingUp) {
           //moving the image into themaxHeight
           that.$.canvas.height = that.width * (img2.height / img2.width)
         } else {// to avoid scaling up
