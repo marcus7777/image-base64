@@ -28,10 +28,10 @@
       if (width < 10) {
         console.log("Small is dangerous, I'm upping your value to 10")
         return 10
-			} else {
-				return width
-			}
-		},
+      } else {
+        return width
+      }
+    },
     load: function(url) {
       var that = this
       var img2 = new Image()
@@ -60,6 +60,7 @@
             case 7: ctx.rotate(0.5 * Math.PI);   ctx.translate(width,-height); ctx.scale(-1,1); break
             case 8: ctx.rotate(-0.5 * Math.PI);  ctx.translate(-width,0); break
           }
+          that.orientation = 1          
         }
         ctx.drawImage(thisImage,0,0)
         ctx.restore()
