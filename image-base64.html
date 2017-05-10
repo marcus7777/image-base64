@@ -43,13 +43,19 @@
       thisImage.onload = function() {
         can.width  = thisImage.width
         can.height = thisImage.height
+        if (that.log) {
+          console.log("loading image " + can.width + " by " + can.height )
+        }
         ctx.save()
-        var width  = can.width;  var styleWidth  = can.style.width
-        var height = can.height; var styleHeight = can.style.height
-        if (orientation) {
+        var width  = can.width   //;  var styleWidth  = can.style.width
+        var height = can.height  //; var styleHeight = can.style.height
+        if (orientation !== 1) {
+          if (that.log) {
+            console.log("translating and rotate")
+          }
           if (orientation > 4) {
-            can.width  = height; can.style.width  = styleHeight
-            can.height = width;  can.style.height = styleWidth
+            can.width  = height  //; can.style.width  = styleHeight
+            can.height = width   //; can.style.height = styleWidth
           }
           switch (orientation) {
             case 2: ctx.translate(width, 0);     ctx.scale(-1,1); break
@@ -63,44 +69,46 @@
           that.orientation = 1          
         }
         ctx.drawImage(thisImage,0,0)
-        ctx.restore()
-          img2.src = can.toDataURL()
+        if (that.log) {
+          console.log("drawing Image" )
         }
-        img2.onload = function () {
-          if (img2.width > that.$.canvas.width || that.scalingUp) {
-            //moving the image into themaxHeight
-            that.$.canvas.height = that.width * (img2.height / img2.width)
-          } else {// to avoid scaling up
-            that.$.canvas.height = img2.height
-            that.$.canvas.width  = img2.width
-          }
-          window.pica.resizeCanvas(img2, that.$.canvas, {alpha: true},function() {
-            // that.$.canvas.height = Math.min(that.$.canvas.height, that.maxHeight)
-            if (that.$.canvas.height > that.maxHeight || that.$.canvas.width > that.maxWidth) {
-              var tempCanvas = document.createElement("canvas")
-              var tCtx = tempCanvas.getContext("2d")
+        ctx.restore()
+        img2.src = can.toDataURL()
+      }
+      img2.onload = function () {
+        if (img2.width > that.$.canvas.width || that.scalingUp) {
+          //moving the image into themaxHeight
+          that.$.canvas.height = that.width * (img2.height / img2.width)
+        } else {// to avoid scaling up
+          that.$.canvas.height = img2.height
+          that.$.canvas.width  = img2.width
+        }
+        window.pica.resizeCanvas(img2, that.$.canvas, {alpha: true},function() {
+          // that.$.canvas.height = Math.min(that.$.canvas.height, that.maxHeight)
+          if (that.$.canvas.height > that.maxHeight || that.$.canvas.width > that.maxWidth) {
+            var tempCanvas = document.createElement("canvas")
+            var tCtx = tempCanvas.getContext("2d")
 
-              tempCanvas.width  = Math.min(that.$.canvas.width, that.maxWidth)
-              if (that.$.canvas.width > that.maxWidth) {
-                var moveLeft = (that.$.canvas.width - that.maxWidth) / 2
-              } else {
-                var moveLeft = 0
-              }
-            
-              tempCanvas.height = Math.min(that.$.canvas.height, that.maxHeight)
-              if (that.$.canvas.height > that.maxHeight) {
-                var moveUp = (that.$.canvas.height - that.maxHeight) / 2
-              } else {
-                var moveUp = 0
-              }
-            
-              tCtx.drawImage(that.$.canvas,0 - moveLeft ,0 - moveUp)
-              
-              that.base64 = tempCanvas.toDataURL("image/png")
+            tempCanvas.width  = Math.min(that.$.canvas.width, that.maxWidth)
+            if (that.$.canvas.width > that.maxWidth) {
+              var moveLeft = (that.$.canvas.width - that.maxWidth) / 2
             } else {
-              that.base64 = that.$.canvas.toDataURL("image/png")
+              var moveLeft = 0
             }
-	        })
+ 
+            tempCanvas.height = Math.min(that.$.canvas.height, that.maxHeight)
+            if (that.$.canvas.height > that.maxHeight) {
+              var moveUp = (that.$.canvas.height - that.maxHeight) / 2
+            } else {
+              var moveUp = 0
+            }            
+          
+            tCtx.drawImage(that.$.canvas,0 - moveLeft ,0 - moveUp)
+            that.base64 = tempCanvas.toDataURL("image/png")
+          } else {
+            that.base64 = that.$.canvas.toDataURL("image/png")
+          }
+        })
       }
       thisImage.src = url
     }
