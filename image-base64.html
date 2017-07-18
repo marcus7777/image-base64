@@ -47,8 +47,8 @@
         thisImage.setAttribute('crossOrigin', 'anonymous')    
         thisImage.onload = function() {
           if (orientation > 4) {
-            var width  = can.height = thisImage.height
-            var height = can.width  = thisImage.width 
+            var width  = can.width  = thisImage.height
+            var height = can.height = thisImage.width 
           } else {
             var width  = can.width  = thisImage.width
             var height = can.height = thisImage.height
