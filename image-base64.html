@@ -46,17 +46,17 @@
         var thisImage = new Image
         thisImage.setAttribute('crossOrigin', 'anonymous')    
         thisImage.onload = function() {
-          can.width  = thisImage.width
-          can.height = thisImage.height
+          var width  = can.width  = thisImage.width
+          var height = can.height = thisImage.height
           if (that.log) {
-            console.log("loading image " + can.width + " by " + can.height )
+            console.log("loaded image " + can.width + " by " + can.height )
           }
           ctx.save()
-          var width  = can.width   //;  var styleWidth  = can.style.width
-          var height = can.height  //; var styleHeight = can.style.height
+          
+          
           if (orientation !== 1) {
             if (that.log) {
-              console.log("translating and rotate")
+              console.log("translating and rotate orientation:",orientation)
             }
             if (orientation > 4) {
               can.width  = height  //; can.style.width  = styleHeight
@@ -88,8 +88,10 @@
             that.$.canvas.height = img2.height
             that.$.canvas.width  = img2.width
           }
-          window.pica.resizeCanvas(img2, that.$.canvas, {alpha: true},function() {
-            // that.$.canvas.height = Math.min(that.$.canvas.height, that.maxHeight)
+          console.log("(img2.height / img2.width)", (img2.height / img2.width))
+          
+          window.pica.resizeCanvas(this, that.$.canvas, {alpha: true},function() {
+            that.$.canvas.height = Math.min(that.$.canvas.height, that.maxHeight)
             if (that.$.canvas.height > that.maxHeight || that.$.canvas.width > that.maxWidth) {
               var tempCanvas = document.createElement("canvas")
               var tCtx = tempCanvas.getContext("2d")
