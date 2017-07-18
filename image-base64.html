@@ -58,10 +58,12 @@
             if (that.log) {
               console.log("translating and rotate")
             }
-       //     if (orientation > 4) {
-       //       can.width  = height  //; can.style.width  = styleHeight
-       //       can.height = width   //; can.style.height = styleWidth
-       //     }
+            if (orientation > 4) {
+              can.width  = height
+              can.style.width  = height
+              can.height = width
+              can.style.height = width
+            }
             switch (orientation) {
               case 2: ctx.translate(width, 0);     ctx.scale(-1,1); break
               case 3: ctx.translate(width,height); ctx.rotate(Math.PI); break
