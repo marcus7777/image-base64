@@ -46,21 +46,21 @@
         var thisImage = new Image
         thisImage.setAttribute('crossOrigin', 'anonymous')    
         thisImage.onload = function() {
-          var width  = can.width  = thisImage.width
-          var height = can.height = thisImage.height
+          if (orientation > 4) {
+            var width  = can.height = thisImage.height
+            var height = can.width  = thisImage.width 
+          } else {
+            var width  = can.width  = thisImage.width
+            var height = can.height = thisImage.height
+          }
           if (that.log) {
             console.log("loaded image " + can.width + " by " + can.height )
           }
           ctx.save()
           
-          
           if (orientation !== 1) {
             if (that.log) {
               console.log("translating and rotate orientation:",orientation)
-            }
-            if (orientation > 4) {
-              can.width  = height  //; can.style.width  = styleHeight
-              can.height = width   //; can.style.height = styleWidth
             }
             switch (orientation) {
               case 2: ctx.translate(width, 0);     ctx.scale(-1,1); break
