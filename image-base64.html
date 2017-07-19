@@ -73,7 +73,7 @@
               case 7: ctx.rotate(0.5 * Math.PI);   ctx.translate(width,-height); ctx.scale(-1,1); break
               case 8: ctx.rotate(-0.5 * Math.PI);  ctx.translate(-width,0); break
             }
-            that.orientation = 1          
+            that.orientation = orientation = 1          
           }
           ctx.drawImage(thisImage,0,0)
           if (that.log) {
@@ -113,7 +113,9 @@
               tCtx.drawImage(that.$.canvas,0 - moveLeft ,0 - moveUp)
               that.base64 = tempCanvas.toDataURL("image/png")
             } else {
-              that.base64 = that.$.canvas.toDataURL("image/png")
+              if (!that.base64) {
+                that.base64 = that.$.canvas.toDataURL("image/png")
+              }
             }
           })
         }
