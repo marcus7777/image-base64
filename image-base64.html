@@ -83,9 +83,10 @@
           img2.src = can.toDataURL()
         }
         img2.onload = function () {
-          if (img2.width > that.$.canvas.width || that.scalingUp) {
+          if (img2.width > that.width || that.scalingUp) {
             //moving the image into themaxHeight
             that.$.canvas.height = that.width * (img2.height / img2.width)
+            that.$.canvas.width  = that.width
           } else {// to avoid scaling up
             that.$.canvas.height = img2.height
             that.$.canvas.width  = img2.width
