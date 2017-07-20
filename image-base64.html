@@ -113,8 +113,9 @@
               tCtx.drawImage(that.$.canvas,0 - moveLeft ,0 - moveUp)
               that.base64 = tempCanvas.toDataURL("image/png")
             } else {
-              if (!that.base64) {
-                that.base64 = that.$.canvas.toDataURL("image/png")
+              var base64 = that.$.canvas.toDataURL("image/png")
+              if (!that.base64 && that.base64 !== base64) {
+                that.base64 = base64
               }
             }
           })
