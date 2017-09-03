@@ -25,6 +25,7 @@
     load: function(url,orientation,aspectRatio,minHeight,minWidth,maxHeight,maxWidth) {
       var that = this
       if (url && orientation) {
+        this.debounce("draw",
         loadImage( url,
           function (canvas) {
             that.base64 = canvas.toDataURL()
@@ -40,7 +41,7 @@
             aspectRatio: +aspectRatio,
             contain:     true,
           }
-        )
+        ),300)
       }
     }
   })
