@@ -80,7 +80,7 @@
             console.log("drawing Image" )
           }
           ctx.restore()
-          img2.src = can.toDataURL()
+          img2.src = ctx.toDataURL()
         }
         img2.onload = function () {
           if (img2.width > that.width || that.scalingUp) {
