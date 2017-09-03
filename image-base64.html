@@ -9,8 +9,6 @@
     is: "image-base64",
     properties: {
       url: {type:String, observer:"load"},
-      width: {type: Number,value: 100},
-      _width: {computed:"getWidth(width,minWidth)"},
       background: {type: String, value: "#FFF"},
       scalingUp: {value: false},
       base64: {notify: true},
@@ -19,20 +17,6 @@
       minHeight: {type: Number,value: 10},
       minWidth: {type: Number,value: 10},
       orientation: {value: 1},
-      log: {
-        type: Boolean,
-        value: false
-      },
-    },
-    getWidth: function(width,minWidth) {
-      if (minWidth < 10) {
-        minWidth = 10
-      }
-      if (width < minWidth) {
-        return minWidth
-      } else {
-        return width
-      }
     },
     load: function(url) {
       var that = this
@@ -44,6 +28,9 @@
           {  
             canvas: true,
             maxWidth: that.maxWidth,
+            orientation: that.orientation,
+            crop: true,
+            aspectRatio: 1
           }
         )
       }
