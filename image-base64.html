@@ -28,7 +28,9 @@
         this.debounce("draw", function () {
         loadImage( url,
           function (canvas) {
-            that.base64 = canvas.toDataURL()
+            if (canvas.toDataURL) {
+              that.base64 = canvas.toDataURL()
+            }
           },
           {  
             canvas:      true,
